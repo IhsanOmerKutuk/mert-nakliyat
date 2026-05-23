@@ -7,7 +7,10 @@
       "Bash(curl -sS -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/)",
       "Bash(curl -sS http://localhost:3000/)",
       "Bash(curl -sS --max-time 20 http://localhost:3000/ -o /tmp/page.html)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/framer-motion/package.json'\\).version\\)\")",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s http://localhost:3000)"
     ]
   }
 }

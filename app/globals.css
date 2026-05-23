@@ -36,6 +36,21 @@ body {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Sabit navbar altında kalmasın diye bölüm hedeflerine üst boşluk */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);

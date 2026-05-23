@@ -1,59 +1,103 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Float } from "@react-three/drei";
-import { Suspense, useRef } from "react";
-import type { Mesh } from "three";
+import { useMemo, useRef } from "react";
+import * as THREE from "three";
 
-const ORANGE = "#f97316";
-const NAVY = "#1e3a5f";
+const COUNT = 1600;
+const DEPTH = 70;
+const SPREAD_X = 44;
+const SPREAD_Y = 26;
 
-type CargoBoxProps = {
-  position: [number, number, number];
-  color: string;
-  scale?: number;
-  rotationSpeed?: number;
-};
+/**
+ * Kameraya doğru akan partikül alanı — yolda ilerleme / hız hissi verir.
+ * Partiküller +z yönünde hareket eder, kamerayı geçince en arkaya döner.
+ */
+function ParticleField() {
+  const pointsRef = useRef<THREE.Points>(null);
 
-function CargoBox({ position, color, scale = 1, rotationSpeed = 0.2 }: CargoBoxProps) {
-  const ref = useRef<Mesh>(null);
+  const { positions, colors, speeds } = useMemo(() => {
+    const positions = new Float32Array(COUNT * 3);
+    const colors = new Float32Array(COUNT * 3);
+    const speeds = new Float32Array(COUNT);
 
-  useFrame((_, delta) => {
-    if (!ref.current) return;
-    ref.current.rotation.x += delta * rotationSpeed;
-    ref.current.rotation.y += delta * rotationSpeed * 0.65;
+    const orange = new THREE.Color("#f97316");
+    const light = new THREE.Color("#dbe7f6");
+    const dim = new THREE.Color("#3b5a82");
+
+    for (let i = 0; i < COUNT; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * SPREAD_X;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * SPREAD_Y;
+      positions[i * 3 + 2] = -Math.random() * DEPTH;
+
+      const roll = Math.random();
+      const c = roll > 0.82 ? orange : roll > 0.4 ? light : dim;
+      colors[i * 3] = c.r;
+      colors[i * 3 + 1] = c.g;
+      colors[i * 3 + 2] = c.b;
+
+      speeds[i] = 5 + Math.random() * 11;
+    }
+
+    return { positions, colors, speeds };
+  }, []);
+
+  useFrame((state, delta) => {
+    const points = pointsRef.current;
+    if (!points) return;
+
+    const arr = points.geometry.attributes.position.array as Float32Array;
+    const d = Math.min(delta, 0.05); // sekme dönüşlerinde sıçramayı önle
+
+    for (let i = 0; i < COUNT; i++) {
+      const zi = i * 3 + 2;
+      arr[zi] += speeds[i] * d;
+      if (arr[zi] > 5) {
+        arr[zi] = -DEPTH;
+        arr[i * 3] = (Math.random() - 0.5) * SPREAD_X;
+        arr[i * 3 + 1] = (Math.random() - 0.5) * SPREAD_Y;
+      }
+    }
+    points.geometry.attributes.position.needsUpdate = true;
+
+    // imleç takibi ile hafif parallax
+    const targetX = state.pointer.x * 0.4;
+    const targetY = state.pointer.y * 0.25;
+    points.rotation.y += (targetX - points.rotation.y) * 0.04;
+    points.rotation.x += (-targetY - points.rotation.x) * 0.04;
+    points.rotation.z += d * 0.015;
   });
 
   return (
-    <Float speed={1.4} rotationIntensity={0.35} floatIntensity={0.9}>
-      <mesh ref={ref} position={position} scale={scale} castShadow receiveShadow>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color={color} roughness={0.32} metalness={0.18} />
-      </mesh>
-    </Float>
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.16}
+        vertexColors
+        transparent
+        opacity={0.95}
+        sizeAttenuation
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+      />
+    </points>
   );
 }
 
-export default function HeroScene() {
+export default function HeroScene({ active = true }: { active?: boolean }) {
   return (
     <Canvas
-      camera={{ position: [0, 0, 6], fov: 45 }}
+      camera={{ position: [0, 0, 1], fov: 75 }}
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true }}
+      frameloop={active ? "always" : "never"}
       style={{ background: "transparent" }}
     >
-      <ambientLight intensity={0.55} />
-      <directionalLight position={[5, 6, 4]} intensity={1.2} castShadow />
-      <directionalLight position={[-4, -2, -3]} intensity={0.3} color={ORANGE} />
-
-      <Suspense fallback={null}>
-        <Environment preset="city" />
-        <CargoBox position={[-2.1, 0.7, 0]} color={ORANGE} scale={1.0} />
-        <CargoBox position={[1.9, -0.4, -0.6]} color={NAVY} scale={1.25} rotationSpeed={0.14} />
-        <CargoBox position={[0.3, 1.4, -1.2]} color={ORANGE} scale={0.65} rotationSpeed={0.3} />
-        <CargoBox position={[-0.6, -1.2, 0.7]} color={NAVY} scale={0.55} rotationSpeed={0.24} />
-        <CargoBox position={[2.4, 1.5, -1.6]} color={ORANGE} scale={0.42} rotationSpeed={0.36} />
-      </Suspense>
+      <fog attach="fog" args={["#0e1b2a", 18, 65]} />
+      <ParticleField />
     </Canvas>
   );
 }
