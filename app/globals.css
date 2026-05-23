@@ -1,26 +1,51 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Marka renkleri */
+  --color-brand-orange: #f97316;
+  --color-brand-orange-50: #fff7ed;
+  --color-brand-orange-100: #ffedd5;
+  --color-brand-orange-200: #fed7aa;
+  --color-brand-orange-400: #fb923c;
+  --color-brand-orange-500: #f97316;
+  --color-brand-orange-600: #ea580c;
+  --color-brand-orange-700: #c2410c;
+
+  --color-brand-navy: #1e3a5f;
+  --color-brand-navy-50: #f0f4f8;
+  --color-brand-navy-100: #d9e2ec;
+  --color-brand-navy-400: #486581;
+  --color-brand-navy-500: #334e68;
+  --color-brand-navy-600: #243b53;
+  --color-brand-navy-700: #1e3a5f;
+  --color-brand-navy-800: #16293f;
+  --color-brand-navy-900: #0e1b2a;
+
+  /* Yüzey ve metin */
+  --color-background: #ffffff;
+  --color-foreground: var(--color-brand-navy);
+  --color-muted: #f4f6f9;
+
+  /* Font ailesi (next/font değişkenine bağlanır) */
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Premium görünüm için yumuşak seçim rengi */
+::selection {
+  background: var(--color-brand-orange);
+  color: #ffffff;
 }
