@@ -7,7 +7,7 @@ const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 const SERVICES = [
   {
     title: "Evden Eve Nakliyat",
-    img: "https://picsum.photos/seed/house/800/600",
+    img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600",
     desc: "Eşyalarınız uzman ekip tarafından profesyonelce paketlenir, özel donanımlı araçlarla taşınır ve yeni evinize özenle yerleştirilir.",
     icon: (
       <path
@@ -21,7 +21,7 @@ const SERVICES = [
   },
   {
     title: "Şehirler Arası Nakliyat",
-    img: "https://picsum.photos/seed/city/800/600",
+    img: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600",
     desc: "81 ile düzenli sefer ağı. Eşyalarınız anlaşmalı, özel donanımlı araçlarla zamanında ve hasarsız adresine ulaşır.",
     icon: (
       <path
@@ -35,7 +35,7 @@ const SERVICES = [
   },
   {
     title: "Kurumsal Taşıma",
-    img: "https://picsum.photos/seed/office/800/600",
+    img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600",
     desc: "Ofis, mağaza ve depo taşımacılığında iş akışınızı durdurmadan, planlı ve hızlı çözümler sunuyoruz.",
     icon: (
       <path
@@ -49,7 +49,7 @@ const SERVICES = [
   },
   {
     title: "Etkinlik ve Organizasyon Taşımacılığı",
-    img: "https://picsum.photos/seed/concert/800/600",
+    img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600",
     desc: "Konserler, mitingler, fuarlar ve özel etkinlikler için profesyonel ekipman ve malzeme taşıma hizmeti.",
     icon: (
       <>
