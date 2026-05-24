@@ -15,21 +15,13 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-brand-navy-900 text-white"
+      className="relative isolate flex min-h-screen items-center overflow-hidden bg-brand-navy-900 text-white"
     >
-      {/* Arka plan: nakliyat kamyonu görseli */}
-      <div aria-hidden className="absolute inset-0 -z-20">
-        <img
-          src="https://picsum.photos/seed/truck/800/600"
-          alt=""
-          fetchPriority="high"
-          className="h-full w-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-navy-900/80 via-brand-navy-900/65 to-brand-navy-900/90" />
-      </div>
-
-      {/* 3D partikül / yol animasyonu */}
-      <div aria-hidden className="absolute inset-0 -z-10">
+      {/* 3D kargo kutuları — yazıların sağ tarafına yaslı */}
+      <div
+        aria-hidden
+        className="absolute inset-y-0 right-0 -z-10 w-full lg:w-[55%]"
+      >
         <HeroSceneLoader active={inView} />
       </div>
 
@@ -43,7 +35,8 @@ export default function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-brand-navy-900 to-transparent"
       />
 
-      <div className="mx-auto max-w-4xl px-6 text-center">
+      <div className="mx-auto flex w-full max-w-7xl px-6">
+        <div className="max-w-2xl text-center lg:text-left">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -66,7 +59,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
-          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/75"
+          className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/75 lg:mx-0"
         >
           Evden eve, şehirler arası ve kurumsal taşımacılıkta deneyimli ekip
           ve ücretsiz keşif. Dakikalar içinde ücretsiz teklif alın.
@@ -76,7 +69,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4, ease: EASE }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          className="mt-10 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
         >
           <a
             href="#teklif"
@@ -91,6 +84,7 @@ export default function Hero() {
             Hemen Ara
           </a>
         </motion.div>
+        </div>
       </div>
 
       {/* Aşağı kaydır oku */}
