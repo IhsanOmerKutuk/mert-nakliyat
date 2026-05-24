@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s · Öneri Mert Nakliyat",
   },
   description:
-    "Öneri Mert Nakliyat ile İstanbul içi ve şehirler arası evden eve, kurumsal taşımacılık. Sigortalı taşıma, ücretsiz keşif ve hızlı teklif.",
+    "Öneri Mert Nakliyat ile İstanbul içi ve şehirler arası evden eve, kurumsal taşımacılık. Ücretsiz keşif ve hızlı teklif.",
   metadataBase: new URL("https://mertnakliyat.example"),
   openGraph: {
     title: "Öneri Mert Nakliyat — Güvenli ve Profesyonel Taşımacılık",

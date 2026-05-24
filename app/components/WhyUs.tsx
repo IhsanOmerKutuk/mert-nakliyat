@@ -9,7 +9,7 @@ const STATS = [
   { value: 500, suffix: "+", label: "Mutlu Müşteri" },
   { value: 10, suffix: "+", label: "Yıllık Deneyim" },
   { value: 81, suffix: "", label: "İle Hizmet" },
-  { value: 100, suffix: "%", label: "Sigortalı Taşıma" },
+  { value: 100, suffix: "%", label: "Müşteri Memnuniyeti" },
 ];
 
 function Counter({ to, suffix, duration = 2 }: { to: number; suffix: string; duration?: number }) {

@@ -39,7 +39,7 @@ export default function Footer() {
             </div>
             <p className="mt-4 max-w-sm leading-relaxed text-white/60">
               İstanbul merkezli, Türkiye geneli evden eve, şehirler arası ve kurumsal
-              nakliyat hizmeti. Sigortalı taşıma ve ücretsiz keşif ile yanınızdayız.
+              nakliyat hizmeti. Güvenli taşımacılık ve ücretsiz keşif ile yanınızdayız.
             </p>
           </div>
 

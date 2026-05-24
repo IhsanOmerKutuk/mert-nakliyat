@@ -17,6 +17,17 @@ export default function Hero() {
       ref={sectionRef}
       className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-brand-navy-900 text-white"
     >
+      {/* Arka plan: nakliyat kamyonu görseli */}
+      <div aria-hidden className="absolute inset-0 -z-20">
+        <img
+          src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=80"
+          alt=""
+          fetchPriority="high"
+          className="h-full w-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-navy-900/80 via-brand-navy-900/65 to-brand-navy-900/90" />
+      </div>
+
       {/* 3D partikül / yol animasyonu */}
       <div aria-hidden className="absolute inset-0 -z-10">
         <HeroSceneLoader active={inView} />
@@ -25,7 +36,7 @@ export default function Hero() {
       {/* Derinlik için gradient katmanları */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_center,_#1e3a5f_0%,_#0e1b2a_70%)]"
+        className="absolute inset-0 -z-30 bg-[radial-gradient(ellipse_at_center,_#1e3a5f_0%,_#0e1b2a_70%)]"
       />
       <div
         aria-hidden
@@ -57,8 +68,8 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
           className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/75"
         >
-          Evden eve, şehirler arası ve kurumsal taşımacılıkta deneyimli ekip,
-          sigortalı taşıma ve ücretsiz keşif. Dakikalar içinde ücretsiz teklif alın.
+          Evden eve, şehirler arası ve kurumsal taşımacılıkta deneyimli ekip
+          ve ücretsiz keşif. Dakikalar içinde ücretsiz teklif alın.
         </motion.p>
 
         <motion.div

@@ -9,6 +9,7 @@ const AUTO_PLAY_MS = 3000;
 type Slide = {
   title: string;
   desc: string;
+  img: string;
   icon: React.ReactNode;
 };
 
@@ -16,6 +17,7 @@ const SLIDES: Slide[] = [
   {
     title: "Evden Eve Nakliyat",
     desc: "Paketleme, taşıma ve montaj dahil anahtar teslim ev taşıma hizmeti.",
+    img: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=800&q=80",
     icon: (
       <path
         d="M4 11.5 12 5l8 6.5M6 10v9h12v-9M10 19v-5h4v5"
@@ -28,7 +30,8 @@ const SLIDES: Slide[] = [
   },
   {
     title: "Şehirler Arası Nakliyat",
-    desc: "81 ile sigortalı araçlarla zamanında ve hasarsız adrese teslimat.",
+    desc: "81 ile özel donanımlı araçlarla zamanında ve hasarsız adrese teslimat.",
+    img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&q=80",
     icon: (
       <path
         d="M3 16V8.5A1.5 1.5 0 0 1 4.5 7H13v9M13 10h3.5a2 2 0 0 1 1.7 1l1.5 2.4a2 2 0 0 1 .3 1V16M3 16h2m6 0H8m9 0h2m-2 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-12 0a2 2 0 1 1 0 .1Z"
@@ -42,6 +45,7 @@ const SLIDES: Slide[] = [
   {
     title: "Kurumsal Taşıma",
     desc: "Ofis ve depo taşımacılığında iş akışınızı durdurmayan planlı çözümler.",
+    img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80",
     icon: (
       <path
         d="M5 20V6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v14M13 11h5a1 1 0 0 1 1 1v8M3 20h18M8 8h2M8 11h2M8 14h2M16 14h0M16 17h0"
@@ -55,6 +59,7 @@ const SLIDES: Slide[] = [
   {
     title: "Konser Organizasyonu",
     desc: "Sahne, ses ve ışık ekipmanlarının güvenli kurulum ve taşıması.",
+    img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80",
     icon: (
       <>
         <path
@@ -72,6 +77,7 @@ const SLIDES: Slide[] = [
   {
     title: "Miting Organizasyonu",
     desc: "Büyük etkinliklerde ekipman ve malzemenin hızlı, koordineli sevkiyatı.",
+    img: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80",
     icon: (
       <>
         <path
@@ -137,15 +143,22 @@ export default function ServiceSlider() {
                 transition={{ duration: 0.55, ease: EASE }}
                 className="absolute inset-0 flex flex-col items-center justify-center px-16 text-center"
               >
+                <img
+                  src={active.img}
+                  alt=""
+                  aria-hidden
+                  className="absolute inset-0 -z-10 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 -z-10 bg-gradient-to-t from-brand-navy-900/90 via-brand-navy-900/70 to-brand-navy-900/55" />
                 <div className="mb-6 inline-grid h-16 w-16 place-items-center rounded-2xl bg-brand-orange text-white shadow-lg shadow-brand-orange/30">
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden>
                     {active.icon}
                   </svg>
                 </div>
-                <h3 className="text-2xl font-semibold tracking-tight text-brand-navy sm:text-3xl">
+                <h3 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
                   {active.title}
                 </h3>
-                <p className="mt-3 max-w-md leading-relaxed text-brand-navy/70">
+                <p className="mt-3 max-w-md leading-relaxed text-white/80">
                   {active.desc}
                 </p>
               </motion.div>
@@ -184,7 +197,7 @@ export default function ServiceSlider() {
                 aria-label={`${slide.title} slaytına git`}
                 aria-current={i === index}
                 className={`h-2 rounded-full transition-all ${
-                  i === index ? "w-6 bg-brand-orange" : "w-2 bg-brand-navy-100 hover:bg-brand-navy-400"
+                  i === index ? "w-6 bg-brand-orange" : "w-2 bg-white/50 hover:bg-white/80"
                 }`}
               />
             ))}

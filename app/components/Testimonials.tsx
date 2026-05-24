@@ -9,18 +9,21 @@ const REVIEWS = [
     name: "Ayşe K.",
     role: "Kadıköy → Beşiktaş",
     rating: 5,
+    photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&q=80",
     text: "Evden eve taşınmamızı çok profesyonel yaptılar. Hiçbir eşyamız zarar görmedi, ekip son derece nazikti. Kesinlikle tavsiye ederim.",
   },
   {
     name: "Mehmet D.",
     role: "İstanbul → İzmir",
     rating: 5,
+    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80",
     text: "Şehirler arası taşımada söz verdikleri saatte geldiler ve eşyalarımı sapasağlam teslim ettiler. Fiyat da gayet uygundu.",
   },
   {
     name: "Zeynep T.",
     role: "Ofis Taşıma · Levent",
     rating: 5,
+    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=800&q=80",
     text: "Ofisimizi hafta sonu taşıdılar, Pazartesi hiçbir aksama olmadan çalışmaya başladık. Kurumsal taşımada gerçekten işini bilen bir ekip.",
   },
 ];
@@ -80,9 +83,13 @@ export default function Testimonials() {
                 “{r.text}”
               </blockquote>
               <figcaption className="mt-6 flex items-center gap-3 border-t border-brand-navy-100 pt-5">
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-brand-orange/15 font-semibold text-brand-orange">
-                  {r.name.charAt(0)}
-                </span>
+                <img
+                  src={r.photo}
+                  alt={r.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-11 w-11 rounded-full object-cover ring-2 ring-brand-orange/20"
+                />
                 <div>
                   <div className="font-semibold text-brand-navy">{r.name}</div>
                   <div className="text-sm text-brand-navy/60">{r.role}</div>
