@@ -17,7 +17,7 @@ const SLIDES: Slide[] = [
   {
     title: "Evden Eve Nakliyat",
     desc: "Paketleme, taşıma ve montaj dahil anahtar teslim ev taşıma hizmeti.",
-    img: "https://images.unsplash.com/photo-1600518464441-9154a4dea21b?w=800&q=80",
+    img: "https://picsum.photos/seed/house2/800/600",
     icon: (
       <path
         d="M4 11.5 12 5l8 6.5M6 10v9h12v-9M10 19v-5h4v5"
@@ -31,7 +31,7 @@ const SLIDES: Slide[] = [
   {
     title: "Şehirler Arası Nakliyat",
     desc: "81 ile özel donanımlı araçlarla zamanında ve hasarsız adrese teslimat.",
-    img: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&q=80",
+    img: "https://picsum.photos/seed/city2/800/600",
     icon: (
       <path
         d="M3 16V8.5A1.5 1.5 0 0 1 4.5 7H13v9M13 10h3.5a2 2 0 0 1 1.7 1l1.5 2.4a2 2 0 0 1 .3 1V16M3 16h2m6 0H8m9 0h2m-2 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-12 0a2 2 0 1 1 0 .1Z"
@@ -45,7 +45,7 @@ const SLIDES: Slide[] = [
   {
     title: "Kurumsal Taşıma",
     desc: "Ofis ve depo taşımacılığında iş akışınızı durdurmayan planlı çözümler.",
-    img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80",
+    img: "https://picsum.photos/seed/office2/800/600",
     icon: (
       <path
         d="M5 20V6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v14M13 11h5a1 1 0 0 1 1 1v8M3 20h18M8 8h2M8 11h2M8 14h2M16 14h0M16 17h0"
@@ -59,7 +59,7 @@ const SLIDES: Slide[] = [
   {
     title: "Konser Organizasyonu",
     desc: "Sahne, ses ve ışık ekipmanlarının güvenli kurulum ve taşıması.",
-    img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80",
+    img: "https://picsum.photos/seed/concert2/800/600",
     icon: (
       <>
         <path
@@ -77,7 +77,7 @@ const SLIDES: Slide[] = [
   {
     title: "Miting Organizasyonu",
     desc: "Büyük etkinliklerde ekipman ve malzemenin hızlı, koordineli sevkiyatı.",
-    img: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80",
+    img: "https://picsum.photos/seed/concert3/800/600",
     icon: (
       <>
         <path

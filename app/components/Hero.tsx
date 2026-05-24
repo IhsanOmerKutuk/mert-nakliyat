@@ -20,7 +20,7 @@ export default function Hero() {
       {/* Arka plan: nakliyat kamyonu görseli */}
       <div aria-hidden className="absolute inset-0 -z-20">
         <img
-          src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=80"
+          src="https://picsum.photos/seed/truck/800/600"
           alt=""
           fetchPriority="high"
           className="h-full w-full object-cover opacity-40"

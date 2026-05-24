@@ -7,7 +7,7 @@ const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 const SERVICES = [
   {
     title: "Evden Eve Nakliyat",
-    img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80",
+    img: "https://picsum.photos/seed/house/800/600",
     desc: "Eşyalarınız uzman ekip tarafından profesyonelce paketlenir, özel donanımlı araçlarla taşınır ve yeni evinize özenle yerleştirilir.",
     icon: (
       <path
@@ -21,7 +21,7 @@ const SERVICES = [
   },
   {
     title: "Şehirler Arası Nakliyat",
-    img: "https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=800&q=80",
+    img: "https://picsum.photos/seed/city/800/600",
     desc: "81 ile düzenli sefer ağı. Eşyalarınız anlaşmalı, özel donanımlı araçlarla zamanında ve hasarsız adresine ulaşır.",
     icon: (
       <path
@@ -35,7 +35,7 @@ const SERVICES = [
   },
   {
     title: "Kurumsal Taşıma",
-    img: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80",
+    img: "https://picsum.photos/seed/office/800/600",
     desc: "Ofis, mağaza ve depo taşımacılığında iş akışınızı durdurmadan, planlı ve hızlı çözümler sunuyoruz.",
     icon: (
       <path
@@ -49,7 +49,7 @@ const SERVICES = [
   },
   {
     title: "Etkinlik ve Organizasyon Taşımacılığı",
-    img: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80",
+    img: "https://picsum.photos/seed/concert/800/600",
     desc: "Konserler, mitingler, fuarlar ve özel etkinlikler için profesyonel ekipman ve malzeme taşıma hizmeti.",
     icon: (
       <>
@@ -89,16 +89,15 @@ export default function Services() {
           </p>
         </motion.div>
 
-        <div className="mt-16 grid gap-8 [perspective:1200px] sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((s, i) => (
             <motion.article
               key={s.title}
-              initial={{ opacity: 0, y: 60, rotateX: -18 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.4, delay: i * 0.1, ease: EASE } }}
+              whileHover={{ y: -8, transition: { duration: 0.2, ease: EASE } }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: i * 0.15, ease: EASE }}
-              whileHover={{ y: -8, rotateX: 4, rotateY: -4 }}
-              className="group relative overflow-hidden rounded-3xl border border-brand-navy-100 bg-gradient-to-b from-white to-brand-navy-50/40 p-8 shadow-[0_10px_40px_-15px_rgba(30,58,95,0.25)] transition-shadow [transform-style:preserve-3d] hover:shadow-[0_25px_60px_-15px_rgba(249,115,22,0.35)]"
+              className="group relative overflow-hidden rounded-3xl border border-brand-navy-100 bg-gradient-to-b from-white to-brand-navy-50/40 p-8 shadow-[0_10px_40px_-15px_rgba(30,58,95,0.25)] transition-shadow duration-200 hover:shadow-[0_25px_60px_-15px_rgba(249,115,22,0.35)]"
             >
               <div className="relative -mx-8 -mt-8 mb-6 h-40 overflow-hidden rounded-t-3xl">
                 <img
@@ -106,7 +105,7 @@ export default function Services() {
                   alt={s.title}
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-900/55 via-brand-navy-900/10 to-transparent" />
                 <span className="absolute bottom-4 left-6 inline-grid h-12 w-12 place-items-center rounded-2xl bg-brand-orange text-white shadow-lg shadow-brand-orange/40">
@@ -115,14 +114,14 @@ export default function Services() {
                   </svg>
                 </span>
               </div>
-              <h3 className="text-xl font-semibold text-brand-navy">{s.title}</h3>
+              <h3 className="text-xl font-semibold text-brand-navy transition-colors duration-200 group-hover:text-brand-orange">{s.title}</h3>
               <p className="mt-3 leading-relaxed text-brand-navy/70">{s.desc}</p>
               <a
                 href="#teklif"
-                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-orange transition group-hover:gap-3"
+                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-orange"
               >
                 Teklif al
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">
                   <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
