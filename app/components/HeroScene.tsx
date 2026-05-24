@@ -4,100 +4,141 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
-const COUNT = 1600;
-const DEPTH = 70;
-const SPREAD_X = 44;
-const SPREAD_Y = 26;
+// Kahverengi/turuncu karton tonları — her kutu rastgele bir ton alır.
+const CARDBOARD = ["#b5763a", "#a8682f", "#c68a4a", "#9c5f2c", "#d98a3d", "#bb7136", "#e0934a"];
+const TAPE_COLOR = "#ecd7ac"; // kraft koli bandı
 
-/**
- * Kameraya doğru akan partikül alanı — yolda ilerleme / hız hissi verir.
- * Partiküller +z yönünde hareket eder, kamerayı geçince en arkaya döner.
- */
-function ParticleField() {
-  const pointsRef = useRef<THREE.Points>(null);
+type BoxConfig = {
+  id: number;
+  size: [number, number, number];
+  basePos: [number, number, number];
+  color: string;
+  rotSpeed: [number, number, number];
+  bobAmp: number;
+  bobFreq: number;
+  zAmp: number;
+  zFreq: number;
+  phase: number;
+};
 
-  const { positions, colors, speeds } = useMemo(() => {
-    const positions = new Float32Array(COUNT * 3);
-    const colors = new Float32Array(COUNT * 3);
-    const speeds = new Float32Array(COUNT);
+function buildConfigs(): BoxConfig[] {
+  const COUNT = 7;
+  const rand = (min: number, max: number) => min + Math.random() * (max - min);
+  const configs: BoxConfig[] = [];
 
-    const orange = new THREE.Color("#f97316");
-    const light = new THREE.Color("#dbe7f6");
-    const dim = new THREE.Color("#3b5a82");
+  for (let i = 0; i < COUNT; i++) {
+    // Kutuları yatayda dağıt, derinlikte kademelendir.
+    const s = rand(0.85, 2.1);
+    configs.push({
+      id: i,
+      size: [s, s * rand(0.75, 1.05), s * rand(0.8, 1.05)],
+      basePos: [
+        rand(-7, 7),
+        rand(-3.2, 3.2),
+        rand(-4.5, 1.5),
+      ],
+      color: CARDBOARD[i % CARDBOARD.length],
+      rotSpeed: [rand(-0.5, 0.5), rand(-0.6, 0.6), rand(-0.35, 0.35)],
+      bobAmp: rand(0.4, 1.2),
+      bobFreq: rand(0.5, 1.1),
+      zAmp: rand(1.2, 3.2), // ekrana yaklaşıp uzaklaşma genliği
+      zFreq: rand(0.25, 0.6),
+      phase: rand(0, Math.PI * 2),
+    });
+  }
+  return configs;
+}
 
-    for (let i = 0; i < COUNT; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * SPREAD_X;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * SPREAD_Y;
-      positions[i * 3 + 2] = -Math.random() * DEPTH;
+/** Bant çizgileri sarılı tek bir 3D kargo kutusu. */
+function CargoBox(cfg: BoxConfig) {
+  const groupRef = useRef<THREE.Group>(null);
+  const tRef = useRef(cfg.phase);
 
-      const roll = Math.random();
-      const c = roll > 0.82 ? orange : roll > 0.4 ? light : dim;
-      colors[i * 3] = c.r;
-      colors[i * 3 + 1] = c.g;
-      colors[i * 3 + 2] = c.b;
+  const [w, h, d] = cfg.size;
 
-      speeds[i] = 5 + Math.random() * 11;
-    }
+  useFrame((_, delta) => {
+    const g = groupRef.current;
+    if (!g) return;
 
-    return { positions, colors, speeds };
-  }, []);
+    const dt = Math.min(delta, 0.05); // sekme/duraklama sonrası sıçramayı önle
+    tRef.current += dt;
+    const t = tRef.current;
 
-  useFrame((state, delta) => {
-    const points = pointsRef.current;
-    if (!points) return;
+    g.rotation.x += dt * cfg.rotSpeed[0];
+    g.rotation.y += dt * cfg.rotSpeed[1];
+    g.rotation.z += dt * cfg.rotSpeed[2];
 
-    const arr = points.geometry.attributes.position.array as Float32Array;
-    const d = Math.min(delta, 0.05); // sekme dönüşlerinde sıçramayı önle
-
-    for (let i = 0; i < COUNT; i++) {
-      const zi = i * 3 + 2;
-      arr[zi] += speeds[i] * d;
-      if (arr[zi] > 5) {
-        arr[zi] = -DEPTH;
-        arr[i * 3] = (Math.random() - 0.5) * SPREAD_X;
-        arr[i * 3 + 1] = (Math.random() - 0.5) * SPREAD_Y;
-      }
-    }
-    points.geometry.attributes.position.needsUpdate = true;
-
-    // imleç takibi ile hafif parallax
-    const targetX = state.pointer.x * 0.4;
-    const targetY = state.pointer.y * 0.25;
-    points.rotation.y += (targetX - points.rotation.y) * 0.04;
-    points.rotation.x += (-targetY - points.rotation.x) * 0.04;
-    points.rotation.z += d * 0.015;
+    // Zıplama (y) + ekrana yaklaşıp uzaklaşma (z) + hafif yatay salınım
+    g.position.x = cfg.basePos[0] + Math.cos(t * cfg.bobFreq * 0.5) * 0.3;
+    g.position.y = cfg.basePos[1] + Math.sin(t * cfg.bobFreq) * cfg.bobAmp;
+    g.position.z = cfg.basePos[2] + Math.sin(t * cfg.zFreq) * cfg.zAmp;
   });
 
   return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.16}
-        vertexColors
-        transparent
-        opacity={0.95}
-        sizeAttenuation
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
+    <group ref={groupRef} position={cfg.basePos}>
+      {/* Karton gövde */}
+      <mesh castShadow>
+        <boxGeometry args={[w, h, d]} />
+        <meshStandardMaterial color={cfg.color} roughness={0.92} metalness={0.04} />
+      </mesh>
+
+      {/* Üstten sarılan koli bandı (ön-arka yönünde) */}
+      <mesh>
+        <boxGeometry args={[w * 0.28, h + 0.02, d + 0.02]} />
+        <meshStandardMaterial color={TAPE_COLOR} roughness={0.5} metalness={0.05} />
+      </mesh>
+
+      {/* Üst kapakta birleşim bandı (yan yönde, daha ince) */}
+      <mesh position={[0, h / 2, 0]}>
+        <boxGeometry args={[w + 0.02, 0.05, d * 0.22]} />
+        <meshStandardMaterial color={TAPE_COLOR} roughness={0.5} metalness={0.05} />
+      </mesh>
+    </group>
+  );
+}
+
+/** Tüm kutuları taşıyan, imleç takibiyle hafif parallax yapan grup. */
+function CargoBoxes() {
+  const groupRef = useRef<THREE.Group>(null);
+  const configs = useMemo(buildConfigs, []);
+
+  useFrame((state) => {
+    const g = groupRef.current;
+    if (!g) return;
+    const tx = state.pointer.x * 0.22;
+    const ty = state.pointer.y * 0.16;
+    g.rotation.y += (tx - g.rotation.y) * 0.04;
+    g.rotation.x += (-ty - g.rotation.x) * 0.04;
+  });
+
+  return (
+    <group ref={groupRef}>
+      {configs.map((c) => (
+        <CargoBox key={c.id} {...c} />
+      ))}
+    </group>
   );
 }
 
 export default function HeroScene({ active = true }: { active?: boolean }) {
   return (
     <Canvas
-      camera={{ position: [0, 0, 1], fov: 75 }}
+      camera={{ position: [0, 0, 9], fov: 50 }}
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true }}
       frameloop={active ? "always" : "never"}
       style={{ background: "transparent" }}
     >
-      <fog attach="fog" args={["#0e1b2a", 18, 65]} />
-      <ParticleField />
+      {/* Lacivert derinlik sisi — uzak kutular arka plana karışır */}
+      <fog attach="fog" args={["#0e1b2a", 12, 28]} />
+
+      <ambientLight intensity={0.85} />
+      <directionalLight position={[4, 6, 8]} intensity={2.2} />
+      <directionalLight position={[-6, -3, 2]} intensity={0.6} color="#6f9bd1" />
+      {/* Turuncu marka vurgusu */}
+      <pointLight position={[-4, 2, 6]} intensity={40} distance={30} color="#f97316" />
+
+      <CargoBoxes />
     </Canvas>
   );
 }

@@ -62,8 +62,8 @@ export default function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white/80">İletişim</h3>
             <ul className="mt-4 space-y-3 text-white/60">
               <li>
-                <a href="tel:+902120000000" className="transition hover:text-brand-orange">
-                  +90 212 000 00 00
+                <a href="tel:+905510784554" className="transition hover:text-brand-orange">
+                  0551 078 45 54
                 </a>
               </li>
               <li>
@@ -72,7 +72,7 @@ export default function Footer() {
                 </a>
               </li>
               <li>İstanbul, Türkiye</li>
-              <li>Hafta içi 08:00 – 20:00</li>
+              <li>7/24 Hizmetinizdeyiz</li>
             </ul>
             <div className="mt-5">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-white/80">Hizmetler</h3>
