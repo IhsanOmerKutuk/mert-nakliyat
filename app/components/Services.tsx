@@ -44,6 +44,23 @@ const SERVICES = [
       />
     ),
   },
+  {
+    title: "Etkinlik ve Organizasyon Taşımacılığı",
+    desc: "Konserler, mitingler, fuarlar ve özel etkinlikler için profesyonel ekipman ve malzeme taşıma hizmeti.",
+    icon: (
+      <>
+        <path
+          d="M9 17V5l10-2v12"
+          stroke="currentColor"
+          strokeWidth="1.7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="6" cy="17" r="3" stroke="currentColor" strokeWidth="1.7" />
+        <circle cx="16" cy="15" r="3" stroke="currentColor" strokeWidth="1.7" />
+      </>
+    ),
+  },
 ];
 
 export default function Services() {
@@ -68,7 +85,7 @@ export default function Services() {
           </p>
         </motion.div>
 
-        <div className="mt-16 grid gap-8 [perspective:1200px] md:grid-cols-3">
+        <div className="mt-16 grid gap-8 [perspective:1200px] sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((s, i) => (
             <motion.article
               key={s.title}

@@ -60,7 +60,7 @@ export default function WhyUs() {
           className="mx-auto max-w-2xl text-center"
         >
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand-orange-400">
-            Neden Mert Nakliyat?
+            Neden Öneri Mert Nakliyat?
           </p>
           <h2 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
             Rakamlarla güvenin adı

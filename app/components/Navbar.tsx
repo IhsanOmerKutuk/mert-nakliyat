@@ -45,7 +45,7 @@ export default function Navbar() {
               <circle cx="17" cy="18" r="1.8" stroke="currentColor" strokeWidth="1.6" />
             </svg>
           </span>
-          Mert Nakliyat
+          Öneri Mert Nakliyat
         </a>
 
         <div className="hidden items-center gap-8 md:flex">

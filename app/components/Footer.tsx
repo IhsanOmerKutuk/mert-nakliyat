@@ -35,7 +35,7 @@ export default function Footer() {
                   <circle cx="17" cy="18" r="1.8" stroke="currentColor" strokeWidth="1.6" />
                 </svg>
               </span>
-              Mert Nakliyat
+              Öneri Mert Nakliyat
             </div>
             <p className="mt-4 max-w-sm leading-relaxed text-white/60">
               İstanbul merkezli, Türkiye geneli evden eve, şehirler arası ve kurumsal
@@ -86,7 +86,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-white/50 sm:flex-row">
-          <p>© {new Date().getFullYear()} Mert Nakliyat. Tüm hakları saklıdır.</p>
+          <p>© {new Date().getFullYear()} Öneri Mert Nakliyat. Tüm hakları saklıdır.</p>
           <p>İstanbul · Türkiye geneli güvenli taşımacılık</p>
         </div>
       </div>
